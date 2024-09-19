@@ -1,14 +1,13 @@
+
 # Quadratic Equation Resolution with Manim
 
 This repository contains a Manim script that visually demonstrates the step-by-step resolution of the quadratic equation:
 
 `3x^2 - 108 = 0`
 
-
 ## Video Preview
 
 ![Equation Resolution Preview](preview.png)
-
 
 ## Project Contents
 
@@ -25,8 +24,7 @@ Follow these instructions to run the code on your computer and produce the same 
 - **Python** 3.7 or higher
 - **Manim Community Edition**
 - **LaTeX** with necessary packages (`sfmath`, `amsmath`, etc.)
-- **FFmpeg** (for audio handling)
-- **Optional**: A video editing software (e.g., OpenShot) for additional adjustments.
+- **FFmpeg** (for audio and video processing)
 
 ### Installation
 
@@ -53,12 +51,6 @@ source venv/bin/activate  # On Windows, use: venv\Scripts\activate
 
 ```bash
 pip install -r requirements.txt
-```
-
-Ensure that the `requirements.txt` file contains:
-
-```
-manim
 ```
 
 #### 5. Install LaTeX
@@ -101,6 +93,36 @@ manim -pqh equation_resolution.py EquationResolutionScene
 
   - `-p`: Preview the video after rendering.
   - `-q h`: Render in high quality. Other options include `l` (low quality), `k` (4K quality), and `p` (production quality).
+
+## Post-processing with FFmpeg
+
+### Trimming the Video and Adding an Audio Fade-Out
+
+To trim the video to 1 minute and 30 seconds and add a 5-second audio fade-out at the end, use the following `ffmpeg` command:
+
+```bash
+ffmpeg -i EquationResolutionScene.mp4 -t 00:01:30 -af "afade=t=out:st=85:d=5" -c:v copy trimmed_faded_EqScene.mp4
+```
+
+- `-i EquationResolutionScene.mp4`: The input video file.
+- `-t 00:01:30`: Sets the duration of the output video to 1 minute and 30 seconds.
+- `-af "afade=t=out:st=85:d=5"`: Adds a fade-out effect to the audio starting at 1 minute 25 seconds (`st=85`) and lasting 5 seconds (`d=5`).
+- `-c:v copy`: Copies the video stream without re-encoding to preserve quality.
+- `trimmed_faded_EqScene.mp4`: The output file.
+
+### Taking a Screenshot from the Video
+
+To take a screenshot of the video at 9 seconds and save it as `preview.png`, use the following `ffmpeg` command:
+
+```bash
+ffmpeg -ss 00:00:09 -i EquationResolutionScene.mp4 -vframes 1 -q:v 2 preview.png
+```
+
+- `-ss 00:00:09`: Seeks to 9 seconds in the video.
+- `-i EquationResolutionScene.mp4`: The input video file.
+- `-vframes 1`: Captures a single frame.
+- `-q:v 2`: Sets the quality of the output PNG (lower is better; 2 is a high-quality setting).
+- `preview.png`: The name of the output image file.
 
 ## Background Music
 
@@ -193,31 +215,6 @@ To render equations in sans-serif font, the script uses a custom `TexTemplate` w
 
 - Consult the [Manim Documentation](https://docs.manim.community/) for detailed instructions.
 
-## Additional Video Editing
-
-For further adjustments such as cutting the video or adding audio fade-outs, you can use a video editing software like **OpenShot** (free and open-source).
-
-### Steps for Editing with OpenShot
-
-1. **Install OpenShot**
-
-   ```bash
-   sudo apt-get install openshot
-   ```
-
-2. **Import the Video into OpenShot**
-
-   - Open OpenShot and import the video rendered by Manim.
-
-3. **Make Adjustments**
-
-   - Cut the video as needed.
-   - Adjust the volume or add audio fade-outs if necessary.
-
-4. **Export the Final Video**
-
-   - Choose the desired export format (e.g., MP4 in 1080p).
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
@@ -231,3 +228,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ---
 
 If you have any questions or suggestions, feel free to open an issue or contact me.
+
