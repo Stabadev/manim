@@ -10,7 +10,7 @@ This repository contains a Manim script that visually demonstrates the step-by-s
 ![Equation Resolution Preview](preview.png)
 
 
-## Project Contentsok je veux le 
+## Project Contents
 
 - `equation_resolution.py`: The Manim script that generates the animation.
 - `AcousticGuitar1.mp3`: The background music used in the video.
